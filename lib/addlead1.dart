@@ -1,5 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:m3_avenue/addlead2.dart';
+import 'package:email_validator/email_validator.dart';
+
+import 'lead.dart';
+
+// var lead = new Map();
+Lead lead = Lead(
+    name: '',
+    mobile: '',
+    secondary: '',
+    email: '',
+    address: '',
+    leadpin: '',
+    company: '',
+    experience: '',
+    salary: '',
+    companyaddress: '',
+    companypin: '',
+    city: '',
+    dealamount: '',
+    servicetype: '',
+    sourcetype: '',
+    followdate: '',
+    followtime: '',
+    leadstatus: '',
+    remarks: '');
 
 class Addlead1 extends StatefulWidget {
   @override
@@ -13,9 +38,24 @@ class _Addlead1State extends State<Addlead1> {
   final emailcontroller = TextEditingController();
   final addresscontroller = TextEditingController();
   final pincodecontroller = TextEditingController();
+  bool validate = false;
+
+  // @override
+  // void dispose() {
+  //   leadnamecontroller.dispose();
+  //   mobilecontroller.dispose();
+  //   secondarymobilecontroller.dispose();
+  //   emailcontroller.dispose();
+  //   addresscontroller.dispose();
+  //   pincodecontroller.dispose();
+  //   super.dispose();
+  // }
+
   @override
   Widget build(BuildContext context) {
+    final MediaQueryData mediaquery = MediaQuery.of(context);
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text("Add Leads"),
           backgroundColor: Colors.black,
@@ -59,8 +99,8 @@ class _Addlead1State extends State<Addlead1> {
                           ),
                           child: new TextField(
                             controller: leadnamecontroller,
+                            cursorHeight: 30,
                             decoration: new InputDecoration(
-                              hintText: ' ',
                               border: InputBorder.none,
                             ),
                           ),
@@ -87,8 +127,8 @@ class _Addlead1State extends State<Addlead1> {
                           ),
                           child: new TextField(
                             controller: mobilecontroller,
+                            cursorHeight: 30,
                             decoration: new InputDecoration(
-                              hintText: ' ',
                               border: InputBorder.none,
                             ),
                           ),
@@ -113,8 +153,8 @@ class _Addlead1State extends State<Addlead1> {
                           ),
                           child: new TextField(
                             controller: secondarymobilecontroller,
+                            cursorHeight: 30,
                             decoration: new InputDecoration(
-                              hintText: ' ',
                               border: InputBorder.none,
                             ),
                           ),
@@ -139,8 +179,8 @@ class _Addlead1State extends State<Addlead1> {
                           ),
                           child: new TextField(
                             controller: emailcontroller,
+                            cursorHeight: 30,
                             decoration: new InputDecoration(
-                              hintText: ' ',
                               border: InputBorder.none,
                             ),
                           ),
@@ -165,8 +205,8 @@ class _Addlead1State extends State<Addlead1> {
                           ),
                           child: new TextField(
                             controller: addresscontroller,
+                            cursorHeight: 30,
                             decoration: new InputDecoration(
-                              hintText: ' ',
                               border: InputBorder.none,
                             ),
                           ),
@@ -191,8 +231,8 @@ class _Addlead1State extends State<Addlead1> {
                           ),
                           child: new TextField(
                             controller: pincodecontroller,
+                            cursorHeight: 30,
                             decoration: new InputDecoration(
-                              hintText: ' ',
                               border: InputBorder.none,
                             ),
                           ),
@@ -224,25 +264,114 @@ class _Addlead1State extends State<Addlead1> {
                           Padding(
                             padding: const EdgeInsets.all(2.0),
                             child: InkWell(
-                              child: Container(
-                                  width: 120,
-                                  height: 40,
-                                  child: Center(
-                                    child: Text(
-                                      'Next',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: 'Montserrat'),
+                                child: Container(
+                                    width: 120,
+                                    height: 40,
+                                    child: Center(
+                                      child: Text(
+                                        'Next',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'Montserrat'),
+                                      ),
                                     ),
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.black,
-                                  )),
-                              onTap: () => Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                      builder: (context) => Addlead2())),
-                            ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.black,
+                                    )),
+                                onTap: () {
+                                  setState(() {
+                                    if (leadnamecontroller.text.isEmpty) {
+                                      validate = false;
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text("Message"),
+                                              content: Text(
+                                                  "Lead Name cannot be empty "),
+                                            );
+                                          });
+                                    } else if (mobilecontroller.text.isEmpty ||
+                                        mobilecontroller.text.length != 10) {
+                                      validate = false;
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text("Message"),
+                                              content: Text(
+                                                  "Please Enter valid mobile number"),
+                                            );
+                                          });
+                                    } else if (secondarymobilecontroller
+                                            .text.isEmpty ||
+                                        secondarymobilecontroller.text.length !=
+                                            10) {
+                                      validate = false;
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text("Message"),
+                                              content: Text(
+                                                  "Please Enter valid Secondary mobile number"),
+                                            );
+                                          });
+                                    } else if (emailcontroller.text.isEmpty) {
+                                      validate = false;
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text("Message"),
+                                              content: Text(
+                                                  "Please Enter valid Email"),
+                                            );
+                                          });
+                                    } else if (addresscontroller.text.isEmpty) {
+                                      validate = false;
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text("Message"),
+                                              content: Text(
+                                                  "Address cannot be empty "),
+                                            );
+                                          });
+                                    } else if (pincodecontroller.text.isEmpty) {
+                                      validate = false;
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text("Message"),
+                                              content: Text(
+                                                  "Pincode cannot be empty "),
+                                            );
+                                          });
+                                    } else {
+                                      validate = true;
+                                    }
+                                  });
+                                  if (validate) {
+                                    lead.name = leadnamecontroller.text;
+                                    lead.mobile = mobilecontroller.text;
+                                    lead.secondary =
+                                        secondarymobilecontroller.text;
+                                    lead.email = emailcontroller.text;
+                                    lead.address = addresscontroller.text;
+                                    lead.leadpin = pincodecontroller.text;
+
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Addlead2(lead)));
+                                  } else {
+                                    validate = false;
+                                  }
+                                }),
                           ),
                         ])
                       ])),

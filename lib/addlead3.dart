@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:m3_avenue/leads.dart';
+import 'lead.dart';
 
 class Addlead3 extends StatefulWidget {
+  final Lead lead;
+  const Addlead3(this.lead);
+
   @override
   State<Addlead3> createState() => _Addlead3State();
 }
 
 class _Addlead3State extends State<Addlead3> {
-  final leadnamecontroller = TextEditingController();
-  final mobilecontroller = TextEditingController();
-  final secondarymobilecontroller = TextEditingController();
-  final emailcontroller = TextEditingController();
-  final addresscontroller = TextEditingController();
-  final pincodecontroller = TextEditingController();
+  final dealamountcontroller = TextEditingController();
+  final remarkscontroller = TextEditingController();
   var defaultservicetype = 'Service Type';
   var defaultsourcetype = "Source";
   var defaultleadstatus = ' ';
   TextEditingController dateInput = TextEditingController();
+  TextEditingController timeInput = TextEditingController();
+  bool validate = false;
   void initState() {
-    dateInput.text = ""; //set the initial value of text field
+    dateInput.text = " ";
+    timeInput.text = " "; //set the initial value of text field
     super.initState();
   }
 
@@ -67,7 +72,7 @@ class _Addlead3State extends State<Addlead3> {
                             ),
                           ),
                           child: new TextField(
-                            controller: leadnamecontroller,
+                            controller: dealamountcontroller,
                             decoration: new InputDecoration(
                               hintText: ' ',
                               border: InputBorder.none,
@@ -170,8 +175,10 @@ class _Addlead3State extends State<Addlead3> {
                                 )),
                             Container(
                               height: 40,
-                              width: 150,
+                              width: 160,
                               child: TextField(
+                                textAlign: TextAlign.center,
+                                controller: dateInput,
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -207,7 +214,7 @@ class _Addlead3State extends State<Addlead3> {
                                               dateInput.text =
                                                   formattedDate; //set output date to TextField value.
                                             });
-                                          } else {}
+                                          }
                                         },
                                         child: Icon(Icons.calendar_today))),
                               ),
@@ -226,8 +233,10 @@ class _Addlead3State extends State<Addlead3> {
                                 )),
                             Container(
                               height: 40,
-                              width: 150,
+                              width: 160,
                               child: TextField(
+                                textAlign: TextAlign.center,
+                                controller: timeInput,
                                 decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -249,7 +258,6 @@ class _Addlead3State extends State<Addlead3> {
                                             context:
                                                 context, //context of current state
                                           );
-
                                           if (pickedTime != null) {
                                             print(pickedTime.format(
                                                 context)); //output 10:51 PM
@@ -261,11 +269,15 @@ class _Addlead3State extends State<Addlead3> {
                                             print(
                                                 parsedTime); //output 1970-01-01 22:53:00.000
                                             String formattedTime =
-                                                DateFormat('HH:mm:ss')
+                                                DateFormat('HH:mm')
                                                     .format(parsedTime);
                                             print(
                                                 formattedTime); //output 14:59:00
                                             //DateFormat() is from intl package, you can format the time on any pattern you need.
+                                            setState(() {
+                                              timeInput.text =
+                                                  formattedTime; //set output date to TextField value.
+                                            });
                                           } else {}
                                         },
                                         child:
@@ -344,7 +356,7 @@ class _Addlead3State extends State<Addlead3> {
                             ),
                           ),
                           child: new TextField(
-                            controller: leadnamecontroller,
+                            controller: remarkscontroller,
                             decoration: new InputDecoration(
                               hintText: ' ',
                               border: InputBorder.none,
@@ -422,12 +434,127 @@ class _Addlead3State extends State<Addlead3> {
                                   decoration: BoxDecoration(
                                     color: Colors.black,
                                   )),
-                              onTap: () => {}),
+                              onTap: () {
+                                setState(() {
+                                  if (dealamountcontroller.text.isEmpty) {
+                                    validate = false;
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text("Message"),
+                                            content: Text(
+                                                "Deal Amount cannot be empty "),
+                                          );
+                                        });
+                                  } else if (defaultservicetype ==
+                                      'Service Type') {
+                                    validate = false;
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text("Message"),
+                                            content: Text(
+                                                "Please select Service Type"),
+                                          );
+                                        });
+                                  } else if (defaultsourcetype == "Source") {
+                                    validate = false;
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text("Message"),
+                                            content: Text(
+                                                "Please select Source Type"),
+                                          );
+                                        });
+                                  } else if (defaultleadstatus == ' ') {
+                                    validate = false;
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text("Message"),
+                                            content: Text(
+                                                "Please select Lead Status"),
+                                          );
+                                        });
+                                  } else if (dateInput.text == " ") {
+                                    validate = false;
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text("Message"),
+                                            content:
+                                                Text("Please Select Date "),
+                                          );
+                                        });
+                                  } else if (timeInput.text == " ") {
+                                    validate = false;
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text("Message"),
+                                            content: Text("Please Select Time"),
+                                          );
+                                        });
+                                  } else if (remarkscontroller.text.isEmpty) {
+                                    validate = false;
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text("Message"),
+                                            content: Text(
+                                                "Remarks cannot be empty "),
+                                          );
+                                        });
+                                  } else {
+                                    validate = true;
+                                  }
+                                });
+                                if (validate) {
+                                  var lead = widget.lead;
+                                  lead.dealamount = dealamountcontroller.text;
+                                  lead.servicetype = defaultservicetype;
+                                  lead.sourcetype = defaultsourcetype;
+                                  lead.followdate = dateInput.text;
+                                  lead.followtime = timeInput.text;
+                                  lead.leadstatus = defaultleadstatus;
+                                  lead.remarks = remarkscontroller.text;
+                                  FirebaseFirestore.instance
+                                      .collection("student_details")
+                                      .add({
+                                    'Lead Name': lead.name,
+                                    'Mobile': lead.mobile,
+                                    'Secondary Mobile': lead.secondary,
+                                    'Email': lead.email,
+                                    'Address': lead.address,
+                                    'Pincode': lead.leadpin,
+                                    'Company Name': lead.company,
+                                    'Experience': lead.experience,
+                                    'Salary': lead.salary,
+                                    'Comapany Address': lead.companyaddress,
+                                    'Company Pincode': lead.companypin,
+                                    'Company City': lead.city,
+                                    'Deal Amount': lead.dealamount,
+                                    'Service Type': lead.servicetype,
+                                    'Source Type': lead.sourcetype,
+                                    'Follow Up Date': lead.followdate,
+                                    'Follow Up Time': lead.followtime,
+                                    'Lead Status': lead.leadstatus,
+                                    'Remarks': lead.remarks
+                                  });
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => leadsscreen()));
+                                }
+                              }),
                         ),
                       ])),
-                  Padding(
-                      padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).viewInsets.bottom))
                 ])));
   }
 }

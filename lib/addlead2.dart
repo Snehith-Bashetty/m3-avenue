@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:m3_avenue/addlead3.dart';
 
+import 'lead.dart';
+
 class Addlead2 extends StatefulWidget {
+  final Lead lead;
+  const Addlead2(this.lead);
+
   @override
   State<Addlead2> createState() => _Addlead2State();
 }
 
 class _Addlead2State extends State<Addlead2> {
-  final leadnamecontroller = TextEditingController();
-  final mobilecontroller = TextEditingController();
-  final secondarymobilecontroller = TextEditingController();
-  final emailcontroller = TextEditingController();
+  final companycontroller = TextEditingController();
+  final experiencecontroller = TextEditingController();
+  final salarycontroller = TextEditingController();
   final addresscontroller = TextEditingController();
   final pincodecontroller = TextEditingController();
+  final citycontroller = TextEditingController();
+  bool validate = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +65,7 @@ class _Addlead2State extends State<Addlead2> {
                             ),
                           ),
                           child: new TextField(
-                            controller: leadnamecontroller,
+                            controller: companycontroller,
                             decoration: new InputDecoration(
                               hintText: ' ',
                               border: InputBorder.none,
@@ -84,7 +91,7 @@ class _Addlead2State extends State<Addlead2> {
                             ),
                           ),
                           child: new TextField(
-                            controller: mobilecontroller,
+                            controller: experiencecontroller,
                             decoration: new InputDecoration(
                               hintText: ' ',
                               border: InputBorder.none,
@@ -110,7 +117,7 @@ class _Addlead2State extends State<Addlead2> {
                             ),
                           ),
                           child: new TextField(
-                            controller: secondarymobilecontroller,
+                            controller: salarycontroller,
                             decoration: new InputDecoration(
                               hintText: ' ',
                               border: InputBorder.none,
@@ -136,7 +143,7 @@ class _Addlead2State extends State<Addlead2> {
                             ),
                           ),
                           child: new TextField(
-                            controller: emailcontroller,
+                            controller: addresscontroller,
                             decoration: new InputDecoration(
                               hintText: ' ',
                               border: InputBorder.none,
@@ -165,7 +172,7 @@ class _Addlead2State extends State<Addlead2> {
                                 ),
                               ),
                               child: new TextField(
-                                controller: emailcontroller,
+                                controller: pincodecontroller,
                                 decoration: new InputDecoration(
                                   hintText: ' ',
                                   border: InputBorder.none,
@@ -194,7 +201,7 @@ class _Addlead2State extends State<Addlead2> {
                                 ),
                               ),
                               child: new TextField(
-                                controller: emailcontroller,
+                                controller: citycontroller,
                                 decoration: new InputDecoration(
                                   hintText: ' ',
                                   border: InputBorder.none,
@@ -257,29 +264,111 @@ class _Addlead2State extends State<Addlead2> {
                         Padding(
                             padding: const EdgeInsets.all(2.0),
                             child: InkWell(
-                              child: Container(
-                                  width: 300,
-                                  height: 40,
-                                  child: Center(
-                                    child: Text(
-                                      'Next',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: 'Montserrat'),
+                                child: Container(
+                                    width: 300,
+                                    height: 40,
+                                    child: Center(
+                                      child: Text(
+                                        'Next',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'Montserrat'),
+                                      ),
                                     ),
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.black,
-                                  )),
-                              onTap: () => Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                      builder: (context) => Addlead3())),
-                            )),
+                                    decoration: BoxDecoration(
+                                      color: Colors.black,
+                                    )),
+                                onTap: () {
+                                  setState(() {
+                                    if (companycontroller.text.isEmpty) {
+                                      validate = false;
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text("Message"),
+                                              content: Text(
+                                                  "Company/Business name cannot be empty "),
+                                            );
+                                          });
+                                    } else if (experiencecontroller
+                                        .text.isEmpty) {
+                                      validate = false;
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text("Message"),
+                                              content: Text(
+                                                  "Experience Cannot be Empty"),
+                                            );
+                                          });
+                                    } else if (salarycontroller.text.isEmpty) {
+                                      validate = false;
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text("Message"),
+                                              content: Text(
+                                                  "Salary Cannot be Empty"),
+                                            );
+                                          });
+                                    } else if (addresscontroller.text.isEmpty) {
+                                      validate = false;
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text("Message"),
+                                              content: Text(
+                                                  "Address cannot be empty "),
+                                            );
+                                          });
+                                    } else if (pincodecontroller.text.isEmpty) {
+                                      validate = false;
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text("Message"),
+                                              content: Text(
+                                                  "Pincode cannot be empty "),
+                                            );
+                                          });
+                                    } else if (citycontroller.text.isEmpty) {
+                                      validate = false;
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text("Message"),
+                                              content:
+                                                  Text("City cannot be empty "),
+                                            );
+                                          });
+                                    } else {
+                                      validate = true;
+                                    }
+                                  });
+                                  if (validate) {
+                                    var lead = widget.lead;
+                                    lead.company = companycontroller.text;
+                                    lead.experience = experiencecontroller.text;
+                                    lead.salary = salarycontroller.text;
+                                    lead.companyaddress =
+                                        addresscontroller.text;
+                                    lead.city = citycontroller.text;
+                                    lead.companypin = pincodecontroller.text;
+
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Addlead3(lead)));
+                                  }
+                                })),
                       ])),
-                  Padding(
-                      padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).viewInsets.bottom))
                 ])));
   }
 }

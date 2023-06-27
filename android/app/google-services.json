@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "1077970227810",
+    "firebase_url": "https://database-testing-c922f-default-rtdb.firebaseio.com",
+    "project_id": "database-testing-c922f",
+    "storage_bucket": "database-testing-c922f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1077970227810:android:f4cd1c6157af48ce79f73b",
+        "android_client_info": {
+          "package_name": "com.example.m3_avenue"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1077970227810-69hd4eln6fr0tnhgous6p1bvgjv2go4d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkvGSKnrHNzgJ_oILIVrce9o1R3ZKzNfE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1077970227810-69hd4eln6fr0tnhgous6p1bvgjv2go4d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1077970227810-70aopbhvfga8a1f6mpjtgur3dqal9rtr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.smartAttendance1"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1077970227810:android:ee4a6fa44bbcc97a79f73b",
+        "android_client_info": {
+          "package_name": "com.example.smart_attendance1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1077970227810-69hd4eln6fr0tnhgous6p1bvgjv2go4d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkvGSKnrHNzgJ_oILIVrce9o1R3ZKzNfE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1077970227810-69hd4eln6fr0tnhgous6p1bvgjv2go4d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1077970227810-70aopbhvfga8a1f6mpjtgur3dqal9rtr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.smartAttendance1"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
